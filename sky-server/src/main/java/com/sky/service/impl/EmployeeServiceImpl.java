@@ -46,7 +46,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         //密码比对
-        // TODO 后期需要进行md5加密，然后再进行比对
+        //后期需要进行md5加密，然后再进行比对
+        password=DigestUtils.md5DigestAsHex(password.getBytes());
+
         if (!password.equals(employee.getPassword())) {
             //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
@@ -61,19 +63,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    @Override
     public void save(EmployeeDTO employeeDTO) {
         Employee employee  = new Employee();
         //对象属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);
         //设置默认密码
-        employee.setPassword(PasswordConstant.DEFAULT_PASSWORD);
+        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()) );
         //设置状态值 1为正常 0为锁定
         employee.setStatus(StatusConstant.ENABLE);
         //设置创建和更改时间
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
+
         //设置创建人id和修改人id
+        //TODO 今後は現在ログインしているユーザーIDに変更する必要があります。
+        
         //employee.setCreateUser(10L);
         //employee.setUpdateUser(10L);
 
