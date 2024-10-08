@@ -71,7 +71,7 @@ public class EmployeeController {
 
         return Result.success(employeeLoginVO);
     }
-
+    
     /**
      * 退出
      *
@@ -95,7 +95,8 @@ public class EmployeeController {
     public Result<PageResult> page(EmployeePageQueryDTO  employeePageQueryDTO){
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
-    }
+    } 
+    
 
     @PostMapping("/status/{status}")
     @ApiOperation("従業員アカウントの有効化と無効化")

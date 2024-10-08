@@ -1,3 +1,6 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.suggest.filterGraceful": false,
+    "java.import.maven.disableTestClasspathFlag": true,
+    "java.import.maven.offline.enabled": true
 }

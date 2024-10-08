@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
         String password = employeeLoginDTO.getPassword();
-        //password = DigestUtils.md5DigestAsHex(password.getBytes());
+        password = DigestUtils.md5DigestAsHex(password.getBytes());
 
         //1、根据用户名查询数据库中的数据
            Employee employee = employeeMapper.getByUsername(username);
@@ -51,8 +51,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         //密码比对
-        //后期需要进行md5加密，然后再进行比对
-        password=DigestUtils.md5DigestAsHex(password.getBytes());
 
         if (!password.equals(employee.getPassword())) {
             //密码错误
@@ -84,9 +82,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreateUser(BaseContext.getCurrentId());
         employee.setUpdateUser(BaseContext.getCurrentId());
 
-
-
-
         //4、保存数据
         employeeMapper.save(employee);
     }
@@ -100,7 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total,records);
     }
 
-  
+
     public void startOrStop(Integer status, Long id) {
         Employee employee = new Employee();
         employee.setStatus(status);
@@ -108,13 +103,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.update(employee);
     }
 
-    public Employee getById(Long id) {
 
+    public Employee getById(Long id) {
        Employee employee =  employeeMapper.getById(id);
        employee.setPassword("秘密");
         return employee;
     }
 
+    
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
